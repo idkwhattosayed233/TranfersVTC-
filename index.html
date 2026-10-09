@@ -450,6 +450,39 @@
       </p>
     </div>
 
+<!-- Fecha de regreso (opcional) -->
+<div>
+  <label for="returnDate"
+         class="block text-sm font-semibold mb-2"
+         data-i18n="returnDateLabel">
+    Fecha de regreso (opcional)
+  </label>
+
+  <input id="returnDate"
+         name="returnDate"
+         type="date"
+         class="form-field">
+</div>
+
+<!-- Hora de regreso (opcional) -->
+<div>
+  <label for="returnTime"
+         class="block text-sm font-semibold mb-2"
+         data-i18n="returnTimeLabel">
+    Hora de regreso (opcional)
+  </label>
+
+  <input id="returnTime"
+         name="returnTime"
+         type="text"
+         readonly
+         autocomplete="off"
+         placeholder="Seleccionar hora"
+         data-i18n-placeholder="timePlaceholder"
+         class="form-field cursor-pointer"
+         onclick="openTimePicker('returnTime')"
+         onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openTimePicker('returnTime');}">
+</div>
     <!-- Detalles adicionales -->
     <div class="sm:col-span-2">
       <label for="notes" class="block text-sm font-semibold mb-2">
@@ -986,8 +1019,7 @@
   
 <script>
   /*
-   * WhatsApp number in international format:
-   * no plus sign, spaces or hyphens.
+   * WhatsApp number in international format.
    */
   const WHATSAPP_NUMBER = "34643669611";
 
@@ -1006,7 +1038,6 @@
       stat2: "Presupuesto antes de reservar",
       stat3: "Traslados privados a medida",
       heroNote: "*Confirma disponibilidad de atención en inglés y características del vehículo al reservar.",
-
       formEyebrow: "Solicitud de reserva",
       formTitle: "Tu viaje comienza aquí.",
       formIntro: "Cuéntanos los detalles del traslado. Prepararemos tu solicitud para que puedas enviarla por WhatsApp y recibir una tarifa personalizada según la ruta y tus necesidades.",
@@ -1019,10 +1050,8 @@
       formTipTitle: "¿Llegas en avión?",
       formTip: "Añade tu número de vuelo para facilitar la coordinación de la recogida.",
       formCardTitle: "Detalles del traslado",
-
       passengerNameLabel: "Nombre del pasajero *",
       passengerNamePlaceholder: "Nombre y apellidos",
-
       pickupLabel: "Origen / Dirección de recogida *",
       pickupPlaceholder: "Aeropuerto, dirección, hotel...",
       destinationLabel: "Destino / Hotel *",
@@ -1032,14 +1061,16 @@
       luggageLabel: "Número de maletas *",
       selectLuggage: "Seleccionar",
       dateLabel: "Fecha del traslado *",
-
       timeLabel: "Hora de recogida / llegada *",
       timePlaceholder: "Seleccionar hora",
       timePickerTitle: "Seleccionar hora",
+      returnDateLabel: "Fecha de regreso (opcional)",
+      returnTimeLabel: "Hora de regreso (opcional)",
+      returnTimePickerTitle: "Seleccionar hora de regreso",
       timePickerCancel: "Cancelar",
       timePickerOK: "Aceptar",
       invalidTime: "Selecciona una hora válida.",
-
+      invalidReturnDate: "La fecha de regreso no puede ser anterior a la fecha de ida.",
       flightLabel: "Número de vuelo",
       optional: "(opcional)",
       flightPlaceholder: "Ej. BA1234",
@@ -1049,7 +1080,6 @@
       privacyConsent: "Confirmo que he leído la política de privacidad y acepto utilizar estos datos para gestionar mi solicitud de traslado.",
       formSubmit: "Enviar solicitud por WhatsApp",
       formDisclaimer: "El envío abrirá WhatsApp. No se calcula ni confirma automáticamente una tarifa.",
-
       routesEyebrow: "Rutas frecuentes",
       routesTitle: "Alicante, Costa Blanca y Valencia.",
       routesIntro: "Transfers privados para turistas, familias, viajeros de negocios y desplazamientos entre ciudades.",
@@ -1063,7 +1093,6 @@
       route4Desc: "Viajes interurbanos, recogidas directas y trayectos personalizados.",
       fixedQuote: "Tarifa cerrada bajo presupuesto",
       routeCTA: "Solicitar precio →",
-
       fleetEyebrow: "Nuestra flota",
       fleetTitle: "Viaja a tu manera.",
       fleetIntro: "Solicita el vehículo que mejor se adapte al tamaño de tu grupo y a tu equipaje. La disponibilidad se confirma al reservar.",
@@ -1077,7 +1106,6 @@
       vanCapacity: "Capacidad según vehículo disponible*",
       vehicleCTA: "Consultar disponibilidad",
       fleetNote: "*La capacidad real de pasajeros y equipaje debe confirmarse antes de aceptar el servicio.",
-
       benefitsEyebrow: "La experiencia VIP",
       benefitsTitle: "Un viaje cómodo desde el primer contacto.",
       benefit1Title: "Atención personalizada",
@@ -1088,7 +1116,6 @@
       benefit3Desc: "Consulta la tarifa y las condiciones antes de confirmar.",
       benefit4Title: "Reserva sencilla",
       benefit4Desc: "Envía todos los detalles en un único mensaje de WhatsApp.",
-
       finalEyebrow: "Tu próximo destino te espera",
       finalTitle: "¿Necesitas un traslado en Alicante o Valencia?",
       finalDesc: "Envíanos los detalles de tu viaje y solicita un presupuesto personalizado. Servicio orientado tanto a viajeros locales como internacionales.",
@@ -1115,7 +1142,6 @@
       stat2: "Quote before booking",
       stat3: "Private transfers tailored to you",
       heroNote: "*Please confirm English-language support and vehicle specifications when booking.",
-
       formEyebrow: "Booking request",
       formTitle: "Your journey starts here.",
       formIntro: "Tell us about your transfer. Your details will be organised into a WhatsApp message so the driver can review your route and provide a tailored quote.",
@@ -1128,10 +1154,8 @@
       formTipTitle: "Arriving by plane?",
       formTip: "Add your flight number to help coordinate your pickup.",
       formCardTitle: "Transfer details",
-
       passengerNameLabel: "Passenger name *",
       passengerNamePlaceholder: "Full name",
-
       pickupLabel: "Pickup address / location *",
       pickupPlaceholder: "Airport, address, hotel...",
       destinationLabel: "Destination / Hotel *",
@@ -1141,14 +1165,16 @@
       luggageLabel: "Number of suitcases *",
       selectLuggage: "Select",
       dateLabel: "Transfer date *",
-
       timeLabel: "Pick-up / arrival time *",
       timePlaceholder: "Select time",
-      timePickerTitle: "Select time",
+      timePickerTitle: "Select pickup time",
+      returnDateLabel: "Return date (optional)",
+      returnTimeLabel: "Return time (optional)",
+      returnTimePickerTitle: "Select return time",
       timePickerCancel: "Cancel",
       timePickerOK: "OK",
       invalidTime: "Please select a valid time.",
-
+      invalidReturnDate: "The return date cannot be earlier than the outbound date.",
       flightLabel: "Flight number",
       optional: "(optional)",
       flightPlaceholder: "e.g. BA1234",
@@ -1158,7 +1184,6 @@
       privacyConsent: "I confirm that I have read the privacy policy and agree to the use of these details to manage my transfer request.",
       formSubmit: "Send Request via WhatsApp",
       formDisclaimer: "WhatsApp will open with your request. A fare is not calculated or confirmed automatically.",
-
       routesEyebrow: "Popular routes",
       routesTitle: "Alicante, Costa Blanca & Valencia.",
       routesIntro: "Private transfers for tourists, families, business travellers and journeys between cities.",
@@ -1172,7 +1197,6 @@
       route4Desc: "Intercity journeys, direct pickups and tailored trips.",
       fixedQuote: "Fixed quote on request",
       routeCTA: "Request a Quote →",
-
       fleetEyebrow: "Our fleet",
       fleetTitle: "Travel your way.",
       fleetIntro: "Request the vehicle that best suits your group and luggage. Availability is confirmed when booking.",
@@ -1186,7 +1210,6 @@
       vanCapacity: "Capacity depends on available vehicle*",
       vehicleCTA: "Check Availability",
       fleetNote: "*Actual passenger and luggage capacity must be confirmed before accepting the booking.",
-
       benefitsEyebrow: "The VIP experience",
       benefitsTitle: "A comfortable journey from the first contact.",
       benefit1Title: "Personalised service",
@@ -1197,7 +1220,6 @@
       benefit3Desc: "Check the fare and service conditions before confirming.",
       benefit4Title: "Easy booking",
       benefit4Desc: "Send all your details in a single WhatsApp message.",
-
       finalEyebrow: "Your next destination awaits",
       finalTitle: "Need a transfer in Alicante or Valencia?",
       finalDesc: "Send us your journey details and request a personalised quote. Designed for local and international travellers.",
@@ -1219,12 +1241,11 @@
   function setLanguage(language) {
     currentLanguage = language === "en" ? "en" : "es";
     document.documentElement.lang = currentLanguage;
-    
-    // Traducir el apartado de pagos de Revolut
+
+    // Translate the Revolut payment section.
     document.querySelectorAll("#payment [data-es][data-en]").forEach(element => {
-      const translation = element.getAttribute(
-        currentLanguage === "en" ? "data-en" : "data-es"
-      );
+      const attribute = currentLanguage === "en" ? "data-en" : "data-es";
+      const translation = element.getAttribute(attribute);
 
       if (element.tagName === "IMG") {
         element.alt = translation;
@@ -1233,7 +1254,18 @@
       }
     });
 
+    // Translate the QR image's alternative text.
+    const paymentQR = document.querySelector(
+      "#payment img[data-alt-es][data-alt-en]"
+    );
 
+    if (paymentQR) {
+      paymentQR.alt = paymentQR.getAttribute(
+        currentLanguage === "en" ? "data-alt-en" : "data-alt-es"
+      );
+    }
+
+    // Translate all elements with data-i18n.
     document.querySelectorAll("[data-i18n]").forEach(element => {
       const key = element.getAttribute("data-i18n");
       const value = translations[currentLanguage][key];
@@ -1243,6 +1275,7 @@
       }
     });
 
+    // Translate placeholders.
     document.querySelectorAll("[data-i18n-placeholder]").forEach(element => {
       const key = element.getAttribute("data-i18n-placeholder");
       const value = translations[currentLanguage][key];
@@ -1252,6 +1285,7 @@
       }
     });
 
+    // Update language buttons.
     const langES = document.getElementById("langES");
     const langEN = document.getElementById("langEN");
 
@@ -1270,6 +1304,16 @@
 
       langES.setAttribute("aria-pressed", String(currentLanguage === "es"));
       langEN.setAttribute("aria-pressed", String(currentLanguage === "en"));
+    }
+
+    // Keep the time picker title in the correct language if it is open.
+    const pickerTitle = document.getElementById("timePickerTitle");
+
+    if (pickerTitle) {
+      const isReturn = activeTimeField === "returnTime";
+      const key = isReturn ? "returnTimePickerTitle" : "timePickerTitle";
+      pickerTitle.textContent = translations[currentLanguage][key];
+      pickerTitle.setAttribute("data-i18n", key);
     }
 
     document.title = currentLanguage === "en"
@@ -1291,7 +1335,7 @@
   }
 
   /*
-   * Build the booking message.
+   * Build the booking message, including optional return details.
    */
   function getReservationTemplate(data = {}) {
     const passengerName = data.passengerName || "";
@@ -1302,7 +1346,13 @@
     const luggage = data.luggage || "";
     const date = data.date || "";
     const time = data.time || "";
+    const returnDate = data.returnDate || "";
+    const returnTime = data.returnTime || "";
     const notes = data.notes || "";
+
+    const returnDetails = (returnDate || returnTime)
+      ? `\n- Return date & time / Fecha y hora de regreso: ${returnDate || "N/A"} ${returnTime || ""}`.trimEnd()
+      : "";
 
     return `Hello / Hola, I want to book a transfer / Quiero reservar un transfer:
 
@@ -1312,20 +1362,25 @@
 - Flight No. / Nº Vuelo: ${flight || "N/A"}
 - Passengers / Pasajeros: ${passengers}
 - Luggage / Maletas: ${luggage}
-- Date & Time / Fecha y Hora: ${date} ${time}${notes ? "\n- Additional details / Detalles adicionales: " + notes : ""}
+- Date & Time / Fecha y hora: ${date} ${time}${returnDetails}${notes ? "\n- Additional details / Detalles adicionales: " + notes : ""}
 
 Please calculate the route distance and send me your exact transfer fare.
+
 Por favor, calcula la distancia de la ruta y envíame la tarifa exacta del traslado.`;
   }
 
   /*
-   * Custom time picker
+   * Custom time picker for outbound and return trips.
    */
-  function openTimePicker() {
-    const field = document.getElementById("time");
+  let activeTimeField = "time";
+
+  function openTimePicker(fieldId = "time") {
+    const field = document.getElementById(fieldId);
     const picker = document.getElementById("timePicker");
 
     if (!field || !picker) return;
+
+    activeTimeField = fieldId;
 
     let hour = 12;
     let minute = 0;
@@ -1340,12 +1395,24 @@ Por favor, calcula la distancia de la ruta y envíame la tarifa exacta del trasl
     document.getElementById("timeMinute").value =
       String(minute).padStart(2, "0");
 
+    const title = document.getElementById("timePickerTitle");
+
+    if (title) {
+      const key = fieldId === "returnTime"
+        ? "returnTimePickerTitle"
+        : "timePickerTitle";
+
+      title.setAttribute("data-i18n", key);
+      title.textContent = translations[currentLanguage][key];
+    }
+
     picker.classList.remove("hidden");
     picker.classList.add("flex");
   }
 
   function closeTimePicker() {
     const picker = document.getElementById("timePicker");
+
     if (!picker) return;
 
     picker.classList.add("hidden");
@@ -1355,6 +1422,7 @@ Por favor, calcula la distancia de la ruta y envíame la tarifa exacta del trasl
   function changeTime(type, amount) {
     const id = type === "hour" ? "timeHour" : "timeMinute";
     const input = document.getElementById(id);
+
     if (!input) return;
 
     const max = type === "hour" ? 23 : 59;
@@ -1369,7 +1437,7 @@ Por favor, calcula la distancia de la ruta y envíame la tarifa exacta del trasl
   function confirmTime() {
     const hourInput = document.getElementById("timeHour");
     const minuteInput = document.getElementById("timeMinute");
-    const timeField = document.getElementById("time");
+    const timeField = document.getElementById(activeTimeField);
 
     if (!hourInput || !minuteInput || !timeField) return;
 
@@ -1394,7 +1462,7 @@ Por favor, calcula la distancia de la ruta y envíame la tarifa exacta del trasl
   }
 
   /*
-   * Close the time picker by clicking outside it or pressing Escape.
+   * Close the time picker when clicking outside or pressing Escape.
    */
   document.addEventListener("click", function(event) {
     const picker = document.getElementById("timePicker");
@@ -1411,8 +1479,52 @@ Por favor, calcula la distancia de la ruta y envíame la tarifa exacta del trasl
   });
 
   /*
+   * Date validation: return date cannot precede outbound date.
+   */
+  const dateInput = document.getElementById("date");
+  const returnDateInput = document.getElementById("returnDate");
+
+  function getLocalToday() {
+    const now = new Date();
+
+    return [
+      now.getFullYear(),
+      String(now.getMonth() + 1).padStart(2, "0"),
+      String(now.getDate()).padStart(2, "0")
+    ].join("-");
+  }
+
+  function updateDateLimits() {
+    const today = getLocalToday();
+
+    if (dateInput) {
+      dateInput.min = today;
+    }
+
+    if (returnDateInput) {
+      returnDateInput.min = dateInput && dateInput.value
+        ? dateInput.value
+        : today;
+
+      if (
+        dateInput &&
+        dateInput.value &&
+        returnDateInput.value &&
+        returnDateInput.value < dateInput.value
+      ) {
+        returnDateInput.value = "";
+      }
+    }
+  }
+
+  if (dateInput) {
+    dateInput.addEventListener("change", updateDateLimits);
+  }
+
+  updateDateLimits();
+
+  /*
    * Booking form submission.
-   * The form does not send data to a server; it opens WhatsApp.
    */
   const bookingForm = document.getElementById("bookingForm");
 
@@ -1432,9 +1544,25 @@ Por favor, calcula la distancia de la ruta y envíame la tarifa exacta del trasl
         luggage: String(formData.get("luggage") || ""),
         date: String(formData.get("date") || ""),
         time: String(formData.get("time") || ""),
+        returnDate: String(formData.get("returnDate") || ""),
+        returnTime: String(formData.get("returnTime") || ""),
         flight: String(formData.get("flight") || "").trim(),
         notes: String(formData.get("notes") || "").trim()
       };
+
+      if (
+        data.returnDate &&
+        data.date &&
+        data.returnDate < data.date
+      ) {
+        alert(translations[currentLanguage].invalidReturnDate);
+
+        if (returnDateInput) {
+          returnDateInput.focus();
+        }
+
+        return;
+      }
 
       openWhatsApp(getReservationTemplate(data));
     });
@@ -1442,7 +1570,6 @@ Por favor, calcula la distancia de la ruta y envíame la tarifa exacta del trasl
 
   /*
    * Popular route buttons.
-   * The user can edit the prefilled pickup and destination.
    */
   function chooseRoute(route) {
     const pickup = document.getElementById("pickup");
@@ -1470,6 +1597,7 @@ Por favor, calcula la distancia de la ruta y envíame la tarifa exacta del trasl
     };
 
     const selected = routes[route];
+
     if (!selected) return;
 
     pickup.value = selected.pickup;
@@ -1494,6 +1622,7 @@ Por favor, calcula la distancia de la ruta y envíame la tarifa exacta del trasl
    */
   function chooseVehicle(vehicle) {
     const notes = document.getElementById("notes");
+
     if (!notes) return;
 
     notes.value = vehicle === "van"
@@ -1512,23 +1641,6 @@ Por favor, calcula la distancia de la ruta y envíame la tarifa exacta del trasl
         notes.focus({ preventScroll: true });
       }, 450);
     }
-  }
-
-  /*
-   * Set today's local date as the earliest selectable date.
-   */
-  const dateInput = document.getElementById("date");
-
-  if (dateInput) {
-    const now = new Date();
-
-    const localToday = [
-      now.getFullYear(),
-      String(now.getMonth() + 1).padStart(2, "0"),
-      String(now.getDate()).padStart(2, "0")
-    ].join("-");
-
-    dateInput.min = localToday;
   }
 
   /*
@@ -1560,10 +1672,7 @@ Por favor, calcula la distancia de la ruta y envíame la tarifa exacta del trasl
     });
   }
 
-  /*
-   * Start in Spanish. Language buttons can still call setLanguage("es")
-   * and setLanguage("en") as before.
-   */
+  // Start in Spanish.
   setLanguage("es");
 </script>
 

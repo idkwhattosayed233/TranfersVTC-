@@ -851,18 +851,31 @@
 
   </main>
   
+
 <section id="payment" class="py-16 px-4">
   <div class="max-w-xl mx-auto text-center glass luxury-border rounded-2xl p-8">
 
-    <p class="text-sm uppercase tracking-widest text-[#d4af37] mb-3">
+    <p
+      class="text-sm uppercase tracking-widest text-[#d4af37] mb-3"
+      data-es="Pagos seguros"
+      data-en="Secure payments"
+    >
       Pagos seguros
     </p>
 
-    <h2 class="text-2xl sm:text-3xl font-bold mb-4">
+    <h2
+      class="text-2xl sm:text-3xl font-bold mb-4"
+      data-es="Paga con Revolut"
+      data-en="Pay with Revolut"
+    >
       Paga con Revolut
     </h2>
 
-    <p class="text-zinc-400 mb-6">
+    <p
+      class="text-zinc-400 mb-6"
+      data-es="Escanea el código QR o pulsa el botón para acceder al pago."
+      data-en="Scan the QR code or click the button to access the payment page."
+    >
       Escanea el código QR o pulsa el botón para acceder al pago.
     </p>
 
@@ -875,6 +888,8 @@
       <img
         src="revolut-qr.png"
         alt="Código QR de pago con Revolut"
+        data-alt-es="Código QR de pago con Revolut"
+        data-alt-en="Revolut payment QR code"
         width="220"
         height="220"
         class="w-56 h-56 object-contain"
@@ -887,12 +902,18 @@
         target="_blank"
         rel="noopener noreferrer"
         class="inline-flex items-center justify-center rounded-xl bg-[#d4af37] px-6 py-3 font-bold text-black hover:opacity-90 transition"
+        data-es="Abrir Revolut y pagar"
+        data-en="Open Revolut and pay"
       >
         Abrir Revolut y pagar
       </a>
     </div>
 
-    <p class="text-xs text-zinc-500 mt-5">
+    <p
+      class="text-xs text-zinc-500 mt-5"
+      data-es="Comprueba el destinatario y el importe antes de confirmar el pago."
+      data-en="Check the recipient and amount before confirming your payment."
+    >
       Comprueba el destinatario y el importe antes de confirmar el pago.
     </p>
 
@@ -1198,6 +1219,20 @@
   function setLanguage(language) {
     currentLanguage = language === "en" ? "en" : "es";
     document.documentElement.lang = currentLanguage;
+    
+    // Traducir el apartado de pagos de Revolut
+    document.querySelectorAll("#payment [data-es][data-en]").forEach(element => {
+      const translation = element.getAttribute(
+        currentLanguage === "en" ? "data-en" : "data-es"
+      );
+
+      if (element.tagName === "IMG") {
+        element.alt = translation;
+      } else {
+        element.textContent = translation;
+      }
+    });
+
 
     document.querySelectorAll("[data-i18n]").forEach(element => {
       const key = element.getAttribute("data-i18n");
